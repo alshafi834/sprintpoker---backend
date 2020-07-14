@@ -48,10 +48,15 @@ io.on("connection", (socket) => {
 
   socket.on("startGame", () => {
     const user = getUser(socket.id);
-    console.log(socket.id);
 
     io.to(user.room).emit("gameStarting");
     console.log("game starting");
+  });
+
+  socket.on("resetGame", () => {
+    const user = getUser(socket.id);
+
+    io.to(user.room).emit("gameResetting");
   });
 
   socket.on("sendMessage", (message, callback) => {
