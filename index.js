@@ -53,6 +53,12 @@ io.on("connection", (socket) => {
     console.log("game starting");
   });
 
+  socket.on("flip-cards", () => {
+    const user = getUser(socket.id);
+
+    io.to(user.room).emit("flippingCards");
+  });
+
   socket.on("resetGame", () => {
     const user = getUser(socket.id);
 
@@ -74,12 +80,12 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     const user = removeUser(socket.id);
 
-    if (user) {
+    /* if (user) {
       io.to(user.room).emit("message", {
         user: "admin",
         text: `${user.name} has left`,
       });
-    }
+    } */
   });
 });
 
