@@ -53,10 +53,16 @@ io.on("connection", (socket) => {
     console.log("game starting");
   });
 
-  socket.on("flip-cards", () => {
+  socket.on("flip-cards", (messages, callback) => {
     const user = getUser(socket.id);
-
-    io.to(user.room).emit("flippingCards");
+    console.log(messages.length);
+    let storyPoint = 0;
+    for (let i = 0; i < messages.length; i++) {
+      storyPoint = storyPoint + messages[i].text;
+    }
+    storyPoint = storyPoint / messages.length;
+    io.to(user.room).emit("flippingCards", storyPoint);
+    callback();
   });
 
   socket.on("resetGame", () => {
