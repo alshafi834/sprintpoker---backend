@@ -50,12 +50,10 @@ io.on("connection", (socket) => {
     const user = getUser(socket.id);
 
     io.to(user.room).emit("gameStarting");
-    console.log("game starting");
   });
 
   socket.on("flip-cards", (messages, callback) => {
     const user = getUser(socket.id);
-    console.log(messages.length);
     let storyPoint = 0;
     for (let i = 0; i < messages.length; i++) {
       storyPoint = storyPoint + messages[i].text;
@@ -73,7 +71,6 @@ io.on("connection", (socket) => {
 
   socket.on("sendMessage", (message, callback) => {
     const user = getUser(socket.id);
-    console.log(socket.id);
 
     io.to(user.room).emit("message", { user: user.name, text: message });
     io.to(user.room).emit("roomData", {
