@@ -1,7 +1,7 @@
 const express = require("express");
 const socketio = require("socket.io");
 const http = require("http");
-const cors = require("cors");
+//const cors = require("cors");
 
 const router = require("./router");
 const {
@@ -22,7 +22,7 @@ const app = express();
   );
   next();
 }); */
-app.use(cors());
+//app.use(cors());
 /* var corsOptions = {
   origin: "http://pokersprint.s3-website.eu-central-1.amazonaws.com",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
