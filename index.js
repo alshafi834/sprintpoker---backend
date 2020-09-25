@@ -1,7 +1,7 @@
 const express = require("express");
 const socketio = require("socket.io");
 const http = require("http");
-const cors = require("cors");
+//const cors = require("cors");
 
 const router = require("./router");
 const {
@@ -14,8 +14,25 @@ const {
 const PORT = process.env.PORT || 5000;
 
 const app = express();
+/* app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+}); */
+//app.use(cors());
+/* var corsOptions = {
+  origin: "http://pokersprint.s3-website.eu-central-1.amazonaws.com",
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+app.use(cors(corsOptions)); */
 const server = http.createServer(app);
 const io = socketio(server);
+
+/* io.set("origins", "*");
+io.set("origins", "*:*"); */
 
 io.on("connection", (socket) => {
   console.log("New socket connection");
@@ -92,7 +109,6 @@ io.on("connection", (socket) => {
   });
 });
 
-app.use(cors());
 app.use(router);
 
 server.listen(PORT, () => console.log(`Server has started on port: ${PORT}`));
