@@ -20,7 +20,7 @@ const app = express();
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   );
-  next();
+next();
 }); */
 app.use(cors());
 /* var corsOptions = {
