@@ -14,25 +14,12 @@ const {
 const PORT = process.env.PORT || 5000;
 
 const app = express();
-/* app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-next();
-}); */
+
 app.use(cors());
-/* var corsOptions = {
-  origin: "http://pokersprint.s3-website.eu-central-1.amazonaws.com",
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-app.use(cors(corsOptions)); */
+
 const server = http.createServer(app);
 const io = socketio(server);
 
-/* io.set("origins", "*");
-io.set("origins", "*:*"); */
 
 io.on("connection", (socket) => {
   console.log("New socket connection");
@@ -76,7 +63,12 @@ io.on("connection", (socket) => {
       storyPoint = storyPoint + messages[i].text;
     }
     storyPoint = storyPoint / messages.length;
-    io.to(user.room).emit("flippingCards", storyPoint);
+
+    const allEqual = (arr) => arr.every(val => val.text === arr[0].text);
+
+    const isAllEqual = allEqual(messages);
+
+    io.to(user.room).emit("flippingCards", {point: storyPoint, isEqual: isAllEqual});
     callback();
   });
 
